@@ -1,0 +1,16 @@
+---
+import LandingLayout from "@/layouts/LandingLayout.astro";
+import HeroSlider from "@/components/HeroSlider";
+import { actions } from "astro:actions";
+import { getLocaleFromPath } from "intlayer";
+import type { LocalesValues } from "intlayer";
+
+const locale = getLocaleFromPath(Astro.url.pathname) as LocalesValues;
+const { data, error } = await Astro.callAction(actions.culture.getAll, {
+  locale,
+});
+---
+
+<LandingLayout>
+  <HeroSlider client:load data={data ?? []} />
+</LandingLayout>

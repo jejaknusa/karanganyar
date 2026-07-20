@@ -1,0 +1,24 @@
+---
+import { getLocaleFromPath } from "intlayer";
+import Layout from "./Layout.astro";
+import type { LocalesValues } from "intlayer";
+import { getIntlayer } from "intlayer";
+import ReactWrapper from "./ReactWrapper.tsx";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const locale = getLocaleFromPath(Astro.url.pathname) as LocalesValues;
+const { description: desc } = getIntlayer("layout", locale);
+
+const { title = "Karanganyar", description = desc } = Astro.props;
+const { pathname } = Astro.url;
+---
+
+<Layout title={title} description={description}>
+  <ReactWrapper locale={locale} client:only="react" pathName={pathname}>
+    <slot />
+  </ReactWrapper>
+</Layout>

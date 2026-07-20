@@ -1,0 +1,49 @@
+---
+import Button from "@/components/ui/Button";
+import LandingLayout from "@/layouts/LandingLayout.astro";
+import { ChevronRight } from "@lucide/astro";
+import { Image } from "astro:assets";
+import AbstractTexture from "@/assets/header/abstract-texture.jpg";
+---
+
+<LandingLayout>
+  <!-- Hero -->
+  <section class="relative h-dvh flex flex-col justify-center bg-primary">
+    <Image
+      src={AbstractTexture}
+      alt={"Header potensi modern"}
+      class="absolute inset-0 size-full"
+    />
+    <div class="flex flex-col gap-6 z-2 max-w-3xl text-secondary">
+      <h1>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in nulla
+        dignissim.
+      </h1>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec finibus
+        massa urna. Aenean at elit quam. Mauris vitae mauris ut leo convallis
+        molestie eget
+      </p>
+      <div class="flex gap-6">
+        <Button variant="accent"
+          >Plan a trip <ChevronRight class="ml-2 text-primary" /></Button
+        >
+      </div>
+    </div>
+  </section>
+  <!-- Statistik -->
+  <section class="grid grid-cols-6 gap-12">
+    <div class="col-span-4 row-span-2 flex items-center h-90">
+      <h2>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec finibus
+        massa urna. Aenean at elit quam. Mauris vitae mauris ut leo convallis
+        molestie eget
+      </h2>
+    </div>
+    <div class="row-span-4 col-span-2 rounded-2xl bg-primary h-ful"></div>
+    <div class="row-span-2 col-span-4 rounded-2xl bg-primary h-90"></div>
+    <div class="row-span-2 col-span-2 rounded-2xl bg-primary h-90"></div>
+    <div class="row-span-2 col-span-2 rounded-2xl bg-primary h-90"></div>
+    <div class="row-span-2 col-span-2 rounded-2xl bg-primary h-90"></div>
+  </section>
+</LandingLayout>

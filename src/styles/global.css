@@ -1,0 +1,58 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-primary: #02182b;
+  --color-secondary: #fcf7ff;
+  --color-accent: #ccff66;
+
+  --font-geist: var(--font-geist);
+  --font-instrument-serif: var(--font-instrument-serif);
+
+  --shadow-primary: 3px 6px 4px 0 #02182b33;
+}
+
+@layer base {
+  * {
+    @apply scroll-smooth scrollbar-none;
+  }
+
+  body {
+    @apply bg-secondary text-primary font-geist;
+  }
+
+  h1 {
+    @apply text-[2.5rem] md:text-[3.5rem] xl:text-[4rem] leading-[1.1] font-instrument-serif;
+  }
+  h2 {
+    @apply text-[1.75rem] md:text-[2.5rem] xl:text-[3rem] leading-[1.1] font-instrument-serif;
+  }
+  h3 {
+    @apply text-[1.5rem] md:text-[1.75rem] xl:text-[2rem] leading-[1.1] font-instrument-serif;
+  }
+  h4 {
+    @apply text-[1.25rem] lg:text-[1.5rem] leading-[1.1] font-instrument-serif;
+  }
+  p {
+    @apply text-[1rem] leading-relaxed opacity-70 font-geist;
+  }
+  span {
+    @apply leading-[1.05] font-geist;
+  }
+  b {
+    @apply leading-[1.05] font-geist;
+  }
+  section {
+    @apply p-6 sm:p-12 md:p-18 lg:p-24 xl:p-30 2xl:p-36;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-secondary/5 shadow-primary backdrop-blur-xs;
+  }
+
+  .wrapper-x {
+    @apply px-6 sm:px-12 md:px-18 lg:px-24 xl:px-30 2xl:px-36;
+  }
+}

@@ -1,0 +1,257 @@
+---
+import LandingLayout from "@/layouts/LandingLayout.astro";
+import { Image } from "astro:assets";
+import CandiCetho from "@/assets/header/candi-cetho.webp";
+import Button from "@/components/ui/Button";
+import { ChevronRight, Maximize } from "@lucide/astro";
+import Maps from "@/assets/maps.png";
+import Slider from "@/components/Slider";
+import { getIntlayer, getLocaleFromPath, type LocalesValues } from "intlayer";
+import { actions } from "astro:actions";
+import Card from "@/components/Card";
+import { cn } from "@/lib/utils";
+
+const locale = getLocaleFromPath(Astro.url.pathname) as LocalesValues;
+const { general, hero, cullinary, culture, modern, tourism } = getIntlayer(
+  "home",
+  locale,
+);
+
+const { data: destinationFeatured, error: errDestinationFeatured } =
+  await Astro.callAction(actions.destination.getFeatured, {
+    locale,
+    limit: 3,
+  });
+
+const { data: weather, error: errWeather } = await Astro.callAction(
+  actions.weather.current,
+  {
+    lang: locale,
+  },
+);
+---
+
+<LandingLayout>
+  <!-- Hero -->
+  <section class="relative h-dvh flex flex-col justify-center bg-primary">
+    <div
+      class="absolute z-1 inset-0 bg-linear-120 from-primary from-20% via-primary/80 via-50% to-primary/0"
+    >
+    </div>
+    <Image
+      src={CandiCetho}
+      alt={"Candi Cetho"}
+      class="absolute inset-0 size-full"
+    />
+    <div class="flex flex-col gap-6 z-2 max-w-3xl text-secondary">
+      <h3>Karanganyar</h3>
+      <h1>
+        {hero.heading}
+      </h1>
+      <p>
+        {hero.description}
+      </p>
+      <div class="flex gap-6">
+        <Button variant="accent"
+          >{hero.cta} <ChevronRight class="ml-2 text-primary" /></Button
+        >
+      </div>
+    </div>
+  </section>
+  <!-- General Info -->
+  <section class="flex flex-col gap-16">
+    <div class="flex gap-4 md:gap-6 lg:gap-36 lg:flex-row flex-col">
+      <span class="shrink-0 font-medium">{general.nickname}</span>
+      <h2>{general.heading}</h2>
+      <p>
+        {general.description}
+      </p>
+    </div>
+    <div class="grid grid-cols-5 gap-6">
+      <div
+        class="rounded-2xl bg-primary h-110 relative overflow-hidden col-span-5 md:col-span-3 xl:col-span-1"
+      >
+        <a
+          href="/peta"
+          class="aspect-square rounded-full p-2 w-fit glass absolute top-4 right-4 cursor-pointer"
+        >
+          <Maximize class="text-secondary" size={20} />
+        </a>
+        <Image src={Maps} alt={"Maps Preview"} class={"object-cover h-full"} />
+      </div>
+      <div
+        class="rounded-2xl bg-primary p-4 self-end h-96 flex flex-col justify-end col-span-5 md:col-span-2 xl:col-span-1"
+      >
+        <div class="flex flex-col items-center text-secondary w-fit">
+          <img src={weather?.icon} alt={weather?.description as string} />
+          <div class="flex items-end gap-2">
+            <div class="relativ flex gap-1">
+              <h2 class="text-5xl">{Math.round(weather?.temperature || 0)}</h2>
+              <span class="">o</span>
+            </div>
+            <span class="font-semibold text-xl mb-1.5">{weather?.main}</span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="rounded-2xl bg-primary p-4 self-end h-96 col-span-5 md:col-span-2 xl:col-span-1"
+      >
+      </div>
+      <Slider
+        className="rounded-2xl bg-primary p-4 self-end col-span-5 md:col-span-3 xl:col-span-2 h-96"
+        client:load
+      />
+    </div>
+  </section>
+  <!-- Tourism -->
+  <section class="bg-primary text-secondary grid grid-cols-4 gap-12">
+    <div
+      class="col-span-4 md:col-span-3 xl:col-span-2 flex flex-col gap-8 justify-center"
+    >
+      <h2>{tourism.heading}</h2>
+      <p>
+        {tourism.description}
+      </p>
+      <div class="flex gap-4">
+        <Button variant="accent"
+          >{tourism.cta.primary} <ChevronRight class="ml-2" /></Button
+        >
+        <Button variant="outline" className="border-secondary text-secondary"
+          >{tourism.cta.secondary}<ChevronRight class="ml-2" /></Button
+        >
+      </div>
+    </div>
+    {
+      destinationFeatured &&
+        destinationFeatured.map((item, i) => (
+          <Card
+            className={cn(
+              i == 0 &&
+                "aspect-4/5 bg-secondary rounded-2xl col-start-1 lg:col-start-4 xl:col-start-4",
+              i == 1 &&
+                "lg:aspect-4/5 aspect-auto bg-secondary rounded-2xl lg:col-start-1 lg:col-span-1 col-span-2",
+              i == 2 && "aspect-4/5 bg-secondary rounded-2xl lg:col-start-3",
+            )}
+            data={item}
+          />
+        ))
+    }
+  </section>
+  <!-- Culture -->
+  <section class="flex flex-col gap-12 items-center">
+    <div class="flex flex-col max-w-4xl gap-4 justify-center">
+      <h2 class="text-center">{culture.heading}</h2>
+      <p class="text-center">
+        {culture.description}
+      </p>
+    </div>
+    <div class="flex flex-col gap-12 w-full">
+      <div class="w-full flex flex-col md:flex-row">
+        <div
+          class="aspect-video shrink-0 w-full md:w-1/2 bg-primary rounded-2xl"
+        >
+        </div>
+        <div class="flex flex-col justify-center gap-4 py-12 px-0 md:px-12">
+          <h3>Dhukutan</h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+            finibus massa urna. Aenean at elit quam. Mauris vitae mauris ut leo
+            convallis molestie eget
+          </p>
+          <Button className="w-fit"
+            >{culture.cta.primary} <ChevronRight class="ml-2" /></Button
+          >
+        </div>
+      </div>
+      <div class="w-full flex flex-col md:flex-row-reverse">
+        <div
+          class="aspect-video shrink-0 w-full md:w-1/2 bg-primary rounded-2xl"
+        >
+        </div>
+        <div
+          class="flex flex-col justify-center md:items-end gap-4 py-12 px-0 md:px-12"
+        >
+          <h3>Dhukutan</h3>
+          <p class="md:text-end">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+            finibus massa urna. Aenean at elit quam. Mauris vitae mauris ut leo
+            convallis molestie eget
+          </p>
+          <Button className="w-fit"
+            >{culture.cta.primary} <ChevronRight class="ml-2" /></Button
+          >
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex flex-col rounded-2xl gap-4 justify-center bg-primary text-secondary items-center py-8 px-8 md:px-16 lg:px-24 xl:px-36 w-full"
+    >
+      <h3 class="text-center font-geist">
+        {culture.cta.description}
+      </h3>
+
+      <Button variant="accent"
+        >{culture.cta.primary} <ChevronRight class="ml-2" /></Button
+      >
+    </div>
+  </section>
+  <!-- Modern -->
+  <section class="grid grid-cols-6 gap-8">
+    <div class="col-span-6 xl:col-span-4 flex items-center h-90">
+      <h2>
+        {modern.heading}
+      </h2>
+    </div>
+    <div
+      class="xl:row-span-2 col-span-6 md:col-span-3 xl:col-span-2 rounded-2xl bg-primary h-full"
+    >
+    </div>
+    <div
+      class="col-span-6 md:col-span-3 xl:col-span-4 rounded-2xl bg-primary h-90"
+    >
+    </div>
+    <div class="col-span-6 xl:col-span-2 rounded-2xl bg-primary h-90"></div>
+    <div
+      class="col-span-6 md:col-span-3 xl:col-span-2 rounded-2xl bg-primary h-90"
+    >
+    </div>
+    <div
+      class="col-span-6 md:col-span-3 xl:col-span-2 rounded-2xl bg-primary h-90"
+    >
+    </div>
+  </section>
+  <!-- Culinary -->
+  <section class="flex flex-col gap-12 items-center">
+    <div class="grid grid-cols-6 gap-8 w-full">
+      <div class="w-full flex flex-col lg:flex-row col-span-6 row-span-3">
+        <div
+          class="aspect-video lg:aspect-5/4 shrink-0 w-full lg:w-1/2 bg-primary rounded-2xl"
+        >
+        </div>
+        <div class="flex flex-col justify-center gap-4 py-12 lg:px-12 px-0">
+          <h3>Dhukutan</h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+            finibus massa urna. Aenean at elit quam. Mauris vitae mauris ut leo
+            convallis molestie eget
+          </p>
+          <Button className="w-fit"
+            >{cullinary.cta} <ChevronRight class="ml-2" /></Button
+          >
+        </div>
+      </div>
+      <div
+        class="row-span-2 col-span-2 rounded-2xl bg-primary aspect-square lg:aspect-video"
+      >
+      </div>
+      <div
+        class="row-span-2 col-span-2 rounded-2xl bg-primary aspect-square lg:aspect-video"
+      >
+      </div>
+      <div
+        class="row-span-2 col-span-2 rounded-2xl bg-primary aspect-square lg:aspect-video"
+      >
+      </div>
+    </div>
+  </section>
+</LandingLayout>

@@ -1,0 +1,40 @@
+---
+import LandingLayout from "@/layouts/LandingLayout.astro";
+import HeroSlider from "@/components/HeroSlider";
+import Card from "@/components/Card";
+import { actions } from "astro:actions";
+import { getLocaleFromPath } from "intlayer";
+import type { LocalesValues } from "intlayer";
+
+const locale = getLocaleFromPath(Astro.url.pathname) as LocalesValues;
+const { data: featured, error: errFeatured } = await Astro.callAction(
+  actions.destination.getFeatured,
+  {
+    locale,
+  },
+);
+
+const { data: destination, error: errDestiantion } = await Astro.callAction(
+  actions.destination.getAll,
+  {
+    locale,
+  },
+);
+---
+
+<LandingLayout>
+  <HeroSlider client:load data={featured ?? []} />
+  <section>
+    <div class="grid grid-cols-12 gap-4 xl:gap-8">
+      {
+        destination &&
+          destination.map((item) => (
+            <Card
+              className="aspect-video md:aspect-4/5 rounded-2xl col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-3"
+              data={item}
+            />
+          ))
+      }
+    </div>
+  </section>
+</LandingLayout>

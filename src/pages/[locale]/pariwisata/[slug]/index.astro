@@ -1,0 +1,52 @@
+---
+import Button from "@/components/ui/Button";
+import Markdown from "@/components/ui/Markdown";
+import LandingLayout from "@/layouts/LandingLayout.astro";
+import { ChevronRight, MapPin, Share2 } from "@lucide/astro";
+import { actions } from "astro:actions";
+import { Image } from "astro:assets";
+import type { LocalesValues } from "intlayer";
+import { getLocaleFromPath, getLocalizedUrl } from "intlayer";
+
+const locale = getLocaleFromPath(Astro.url.pathname) as LocalesValues;
+const { slug } = Astro.params;
+const { data, error } = await Astro.callAction(
+  actions.destination.getDestination,
+  {
+    locale,
+    slug: slug as string,
+  },
+);
+if (!data) return null;
+---
+
+<LandingLayout>
+  <section class="flex flex-col gap-12">
+    <div class="flex gap-4 items-center">
+      <a href={getLocalizedUrl("/pariwisaata", locale)} class="font-medium"
+        >Pariwisata</a
+      >
+      <ChevronRight />
+      <span class="opacity-80">{data?.name}</span>
+    </div>
+    <div class="rounded-2xl overflow-hidden h-150 w-full relative">
+      <Image
+        src={data?.image}
+        alt={data.name}
+        class={"object-cover size-full inset-0 absolute"}
+        width={1098}
+        height={600}
+      />
+    </div>
+    <div class="flex justify-between items-center">
+      <h1>{data.name}</h1>
+      <div class="flex gap-4">
+        <Button variant="outline" className="py-1 px-4"
+          ><MapPin class="mr-2" />Lokasi</Button
+        >
+        <Button variant="ghost"><Share2 /></Button>
+      </div>
+    </div>
+    <Markdown content={data.content} />
+  </section>
+</LandingLayout>

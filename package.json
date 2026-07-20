@@ -9,9 +9,45 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "generate-types": "wrangler types"
   },
   "dependencies": {
-    "astro": "^6.4.4"
+    "@astrojs/cloudflare": "^13.6.1",
+    "@astrojs/db": "https://pkg.pr.new/@astrojs/db@3ade645",
+    "@astrojs/react": "^5.0.7",
+    "@gsap/react": "^2.1.2",
+    "@lucide/astro": "^1.17.0",
+    "@supabase/supabase-js": "^2.108.1",
+    "@tailwindcss/typography": "^0.5.20",
+    "@tailwindcss/vite": "^4.3.0",
+    "@types/node": "^25.9.2",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "astro": "^6.4.4",
+    "astro-intlayer": "^8.12.2",
+    "astro-leaflet": "^1.12.0",
+    "clsx": "^2.1.1",
+    "gsap": "^3.15.0",
+    "intlayer": "^8.12.2",
+    "leaflet": "^1.9.4",
+    "lucide-react": "^1.17.0",
+    "marked": "^18.0.5",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "react-intlayer": "^8.12.3",
+    "react-leaflet": "5.0.0-rc.2",
+    "swiper": "^12.2.0",
+    "tailwind-merge": "^3.6.0",
+    "tailwindcss": "^4.3.0",
+    "wrangler": "^4.98.0",
+    "zustand": "^5.0.14"
+  },
+  "devDependencies": {
+    "@types/geojson": "^7946.0.16",
+    "@types/leaflet": "^1.9.21"
+  },
+  "overrides": {
+    "vite": "^7"
   }
 }

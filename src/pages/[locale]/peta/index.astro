@@ -1,0 +1,42 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { getLocaleFromPath } from "intlayer";
+import { getIntlayer } from "intlayer";
+import type { LocalesValues } from "intlayer";
+import { actions } from "astro:actions";
+import ListDestination from "@/components/maps/ListDestination";
+import DetailDestination from "@/components/maps/DetailDestination";
+import Tool from "@/components/maps/Tool";
+import Maps from "@/components/maps/Maps";
+import { IntlayerProvider } from "react-intlayer";
+
+const locale = getLocaleFromPath(Astro.url.pathname) as LocalesValues;
+const { title, description } = getIntlayer("maps", locale);
+
+const { data, error } = await Astro.callAction(actions.destination.getAll, {
+  locale,
+});
+---
+
+<style is:global>
+  .leaflet-control-zoom {
+    display: none !important;
+  }
+</style>
+
+<Layout title={`${title} | Karanganyar`} description={description}>
+  <IntlayerProvider locale={locale}>
+    <div class="h-dvh relative">
+      <Maps data={data} client:only="react" />
+      <div
+        class="flex h-full pointer-events-none z-10 relative w-full"
+      >
+        <ListDestination data={data} client:load />
+        <div class="flex p-8 relative w-full items-end justify-between">
+          <DetailDestination client:load />
+          <Tool client:load />
+        </div>
+      </div>
+    </div>
+  </IntlayerProvider>
+</Layout>

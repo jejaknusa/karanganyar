@@ -1,0 +1,96 @@
+---
+import Button from "@/components/ui/Button";
+import Timeline from "@/components/Timeline";
+import LandingLayout from "@/layouts/LandingLayout.astro";
+import { ChevronRight } from "@lucide/astro";
+import { Image } from "astro:assets";
+import Book from "@/assets/header/book.webp";
+---
+
+<LandingLayout>
+  <!-- Hero -->
+  <section class="h-dvh p-14! pt-44!">
+    <div class="bg-secondary size-full flex items-end rounded-4xl p-14 relative overflow-hidden">
+      <Image
+        src={Book}
+        alt={"Buku"}
+        class="absolute inset-0 size-full"
+      />
+      <div class="flex flex-col gap-6 z-2 max-w-3xl">
+        <h1>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in
+          nulla dignissim.
+        </h1>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec finibus
+          massa urna. Aenean at elit quam. Mauris vitae mauris ut leo convallis
+          molestie eget
+        </p>
+        <div class="flex gap-6">
+          <Button variant="accent"
+            >Plan a trip <ChevronRight class="ml-2 text-primary" /></Button
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- History timeline -->
+  <section class="flex flex-col gap-12 items-center">
+    <div class="flex flex-col max-w-4xl gap-4 justify-center">
+      <h2 class="text-center">Timeline</h2>
+      <p class="text-center">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec finibus
+        massa urna. Aenean at elit quam. Mauris vitae mauris ut leo convallis
+        molestie eget
+      </p>
+    </div>
+    <div class="grid grid-cols-4 relative">
+      {Array.from({ length: 8 }).map(() => <Timeline />)}
+
+      <div class="absolute top-13 left-12 h-8 w-screen bg bg-primary/50"></div>
+      <div class="absolute bottom-103 right-80 h-8 w-screen bg bg-primary/50">
+      </div>
+    </div>
+  </section>
+  <!-- History site -->
+  <section class="flex flex-col gap-12 items-center">
+    <div class="flex flex-col max-w-4xl gap-4 justify-center">
+      <h2 class="text-center">Situs Sejarah</h2>
+      <p class="text-center">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec finibus
+        massa urna. Aenean at elit quam. Mauris vitae mauris ut leo convallis
+        molestie eget
+      </p>
+    </div>
+    <div class="flex flex-col gap-12 w-full">
+      <div class="w-full flex gap-12">
+        <div class="aspect-video shrink-0 w-1/2 bg-primary rounded-2xl"></div>
+        <div class="flex flex-col justify-center gap-4 p-12">
+          <h3>Dhukutan</h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+            finibus massa urna. Aenean at elit quam. Mauris vitae mauris ut leo
+            convallis molestie eget
+          </p>
+          <Button className="w-fit"
+            >Explore <ChevronRight class="ml-2" /></Button
+          >
+        </div>
+      </div>
+      <div class="w-full flex gap-12 flex-row-reverse">
+        <div class="aspect-video shrink-0 w-1/2 bg-primary rounded-2xl"></div>
+        <div class="flex flex-col justify-center items-end gap-4 p-12">
+          <h3>Dhukutan</h3>
+          <p class="text-end">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+            finibus massa urna. Aenean at elit quam. Mauris vitae mauris ut leo
+            convallis molestie eget
+          </p>
+          <Button className="w-fit"
+            >Explore <ChevronRight class="ml-2" /></Button
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+</LandingLayout>
