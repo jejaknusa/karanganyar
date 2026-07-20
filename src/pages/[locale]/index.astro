@@ -83,7 +83,7 @@ const { data: weather, error: errWeather } = await Astro.callAction(
         class="rounded-2xl bg-primary p-4 self-end h-96 flex flex-col justify-end col-span-5 md:col-span-2 xl:col-span-1"
       >
         <div class="flex flex-col items-center text-secondary w-fit">
-          <img src={weather?.icon} alt={weather?.description as string} />
+          <img src={weather?.icon} alt={weather?.description as string}  />
           <div class="flex items-end gap-2">
             <div class="relativ flex gap-1">
               <h2 class="text-5xl">{Math.round(weather?.temperature || 0)}</h2>

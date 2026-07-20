@@ -5,3 +5,5 @@ allowBuilds:
   workerd: true
 minimumReleaseAgeExclude:
   - astro@6.4.4
+packages:
+  - "."
