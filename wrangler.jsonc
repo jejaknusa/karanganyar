@@ -15,5 +15,9 @@
       "binding": "KV",
       "id": "8c761a05418d428996da7b55340d489e",
     },
+    {
+      "binding": "SESSION",
+      "id": "8c761a05418d428996da7b55340d489e",
+    },
   ],
 }
